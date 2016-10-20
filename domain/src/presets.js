@@ -3,18 +3,6 @@ const MINUTES = 60 * SECONDS
 
 const PRESETS = [
     {
-        total: 60 * MINUTES,
-        terminateCallback: context => {
-            context.sound.playTwice()
-            context.onTerminate()
-        },
-        notifications: {
-            [30 * MINUTES]: context => context.sound.play(),
-            [45 * MINUTES]: context => context.sound.play(),
-            [50 * MINUTES]: context => context.sound.playTwice(),
-        },
-    },
-    {
         total: 30 * MINUTES,
         terminateCallback: context => {
             context.sound.playTwice()
@@ -36,6 +24,16 @@ const PRESETS = [
         },
     },
     {
+        total: 10 * MINUTES,
+        terminateCallback: context => {
+            context.sound.playTwice()
+            context.onTerminate()
+        },
+        notifications: {
+            [7 * MINUTES]: context => context.sound.play(),
+        },
+    },
+    {
         total: 5 * MINUTES,
         terminateCallback: context => {
             context.sound.playTwice()
@@ -43,16 +41,6 @@ const PRESETS = [
         },
         notifications: {
             [4 * MINUTES]: context => context.sound.play(),
-        },
-    },
-    {
-        total: 1 * MINUTES,
-        terminateCallback: context => {
-            context.sound.playTwice()
-            context.onTerminate()
-        },
-        notifications: {
-            [50 * SECONDS]: context => context.sound.play(),
         },
     },
 ]
