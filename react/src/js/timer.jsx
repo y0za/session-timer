@@ -37,8 +37,7 @@ export default class Timer extends Component {
     return (
       <div style={{ height: '100%' }}>
         <div className='logo second-hand'>
-          <h1>Builderscon</h1>
-          <img src='./logo-flat.png' style={style}/>
+          <h1>VimConf 2016</h1>
         </div>
         <time>{humanize(this.props.limit - this.state.past)}</time>
       </div>
