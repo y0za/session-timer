@@ -5,6 +5,7 @@ import Header from './header'
 import Config from './config'
 import Timer from './timer'
 import Toolbar from './toolbar'
+import Footer from './footer'
 import SE from './se'
 
 export default class App extends Component {
@@ -33,6 +34,7 @@ export default class App extends Component {
           <Config disabled={this.state.running} choices={this.props.choices} onChange={this.handleChangeLimit.bind(this)} />
           <button onClick={this.handleClickStop.bind(this)}>Stop</button>
         </Toolbar>
+        <Footer />
       </div>
     )
   }
