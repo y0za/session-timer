@@ -30,14 +30,12 @@ export default class Timer extends Component {
 
   render() {
     const rest = this.getRestTime()
-    const style = {
-      'transform': `rotate(${360 * (rest)}deg)`
-    }
 
     return (
       <div style={{ height: '100%' }}>
         <div className='logo second-hand'>
           <h1>VimConf 2016</h1>
+          <img src='./logo-vimconf.png' />
         </div>
         <time>{humanize(this.props.limit - this.state.past)}</time>
       </div>
