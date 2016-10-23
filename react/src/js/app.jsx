@@ -18,6 +18,7 @@ export default class App extends Component {
   getDefaultState() {
     return {
       limit: this.props.choices[0].total,
+      timerProgress: 0,
       restTimeClassName: '',
       running: false
     }
@@ -34,7 +35,7 @@ export default class App extends Component {
           <Config disabled={this.state.running} choices={this.props.choices} onChange={this.handleChangeLimit.bind(this)} />
           <button onClick={this.handleClickStop.bind(this)}>Stop</button>
         </Toolbar>
-        <Footer />
+        <Footer timerProgress={this.state.timerProgress} />
       </div>
     )
   }
@@ -51,7 +52,10 @@ export default class App extends Component {
   handleClickStop() {
     this.refs.timer.stop()
     this.refs.se.pause()
-    this.setState({ running: false })
+    this.setState({
+      timerProgress: 0,
+      running: false
+    })
   }
 
   handleChangeLimit(limit) {
@@ -61,6 +65,7 @@ export default class App extends Component {
 
   handleTick(past) {
     this.setState({
+      timerProgress: past / this.state.limit,
       restTimeClassName: this.getRestTimeClass(past)
     })
   }
