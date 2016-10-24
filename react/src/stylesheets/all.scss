@@ -5,6 +5,8 @@ $size_toolbar_button: 100px;
 $color_toolbar_button: #fff;
 $size_toolbar: 150px;
 $bg_toolbar: #434343;
+$size_footer: 40px;
+$bg_footer: $bg_toolbar;
 
 html,
 body {
@@ -52,6 +54,7 @@ nav a {
   width: 100%;
   height: $size_toolbar;
   bottom: 0;
+  margin-bottom: $size_footer;
   background: $bg_toolbar;
   text-align: center;
 }
@@ -80,6 +83,25 @@ nav a {
 // http://stackoverflow.com/questions/10813528/is-it-possible-to-center-text-in-select-box
 .toolbar select {
   text-indent: 8%;
+}
+
+#footer {
+  position: fixed;
+  height: $size_footer;
+  width: 100%;
+  bottom: 0;
+  background: $bg_footer;
+}
+#footer p {
+  margin: 0;
+}
+#footer img {
+  height: $size_footer - 6px;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+#footer a {
+  color: #fff;
 }
 
 time {
