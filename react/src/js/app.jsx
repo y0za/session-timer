@@ -20,7 +20,8 @@ export default class App extends Component {
       limit: this.props.choices[0].total,
       timerProgress: 0,
       restTimeClassName: '',
-      running: false
+      running: false,
+      pausing: false
     }
   }
 
@@ -29,11 +30,11 @@ export default class App extends Component {
       <div className={'rest-time ' + this.state.restTimeClassName} onClick={this.handleClickScreen.bind(this)}>
         <Header />
         <SE ref="se" sound={this.props.sound} />
-        <Timer ref="timer" limit={this.state.limit} onTick={this.handleTick.bind(this)} onLimit={this.handleLimit.bind(this)} />
+        <Timer ref="timer" limit={this.state.limit} pausing={this.state.pausing} onTick={this.handleTick.bind(this)} onLimit={this.handleLimit.bind(this)} />
         <Toolbar>
-          <button disabled={this.state.running} onClick={this.handleClickStart.bind(this)}>Start</button>
+          <button disabled={!this.state.pausing && this.state.running} onClick={this.handleClickStart.bind(this)}>{this.getStartLabel()}</button>
           <Config disabled={this.state.running} choices={this.props.choices} onChange={this.handleChangeLimit.bind(this)} />
-          <button onClick={this.handleClickStop.bind(this)}>Stop</button>
+          <button disabled={!this.state.running} onClick={this.handleClickPauseReset.bind(this)}>{this.getPauseResetLabel()}</button>
         </Toolbar>
         <Footer timerProgress={this.state.timerProgress} />
       </div>
@@ -45,17 +46,30 @@ export default class App extends Component {
   }
 
   handleClickStart() {
-    this.refs.timer.start()
-    this.setState({ running: true })
+    if (this.state.pausing) {
+      this.setState({
+        pausing: false
+      })
+    } else {
+      this.refs.timer.start()
+      this.setState({ running: true })
+    }
   }
 
-  handleClickStop() {
-    this.refs.timer.stop()
-    this.refs.se.pause()
-    this.setState({
-      timerProgress: 0,
-      running: false
-    })
+  handleClickPauseReset() {
+    if (this.state.pausing) {
+      this.refs.timer.stop()
+      this.refs.se.pause()
+      this.setState({
+        timerProgress: 0,
+        running: false,
+        pausing: false
+      })
+    } else {
+      this.setState({
+        pausing: true
+      })
+    }
   }
 
   handleChangeLimit(limit) {
@@ -111,5 +125,13 @@ export default class App extends Component {
     const timings = [0].concat(choice.notifications).concat([choice.total])
 
     return _.findIndex(timings.reverse(), n => past >= n)
+  }
+
+  getStartLabel() {
+    return this.state.pausing ? 'Resume' : 'Start'
+  }
+
+  getPauseResetLabel() {
+    return this.state.pausing ? 'Reset' : 'Pause'
   }
 }

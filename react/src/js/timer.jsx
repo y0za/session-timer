@@ -6,6 +6,7 @@ export default class Timer extends Component {
   static get propTypes() {
     return {
       limit: React.PropTypes.number.isRequired,
+      pausing: React.PropTypes.bool.isRequired,
       onLimit: React.PropTypes.func,
       onTick: React.PropTypes.func
     }
@@ -52,6 +53,11 @@ export default class Timer extends Component {
   }
 
   tick() {
+    if (this.props.pausing) {
+      const nextSeconds = this.state.startAt.getSeconds() + 1
+      this.state.startAt.setSeconds(nextSeconds)
+      return
+    }
     const past = (new Date() - this.state.startAt) / 1000
     this.setState({
       past: past
